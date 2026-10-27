@@ -4,9 +4,9 @@ namespace JournalProgram
 {
     public class Entry
     {
-        public string Date { get; }
-        public string Prompt { get; }
-        public string Response { get; }
+        private string _date;
+        private string _prompt;
+        private string _response;
 
         public Entry(string date, string prompt, string response)
         {
