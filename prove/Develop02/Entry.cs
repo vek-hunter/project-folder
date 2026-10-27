@@ -29,4 +29,5 @@ namespace JournalProgram
             Console.WriteLine($"{_response}");
             Console.WriteLine();
         }
+   }
 }
