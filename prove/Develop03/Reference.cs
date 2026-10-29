@@ -2,17 +2,17 @@ namespace Develop03;
 
 public class Reference
 {
-    public string Book { get; }
-    public int Chapter { get; }
-    public int StartVerse { get; }
-    public int? EndVerse { get; }
+    private string _book; 
+    private int _chapter;  
+    private int _startVerse; 
+    private int _endVerse; 
 
     public Reference(string book, int chapter, int startVerse)
     {
-        Book = book;
-        Chapter = chapter;
-        StartVerse = startVerse;
-        EndVerse = null;
+        _book = book;
+        _chapter = chapter;
+        _startVerse = startVerse;
+        _endVerse = null;
     }
 
     public Reference(string book, int chapter, int startVerse, int endVerse)
@@ -22,14 +22,27 @@ public class Reference
         StartVerse = startVerse;
         EndVerse = endVerse;
     }
+   public string GetBook() {
+       return _book;
+   }
 
-    public override string ToString()
+   public string GetBook() {
+       return _chapter;
+   }
+
+   public string GetBook() {
+       return _startVerse;
+   }
+   public string GetBook() {
+       return _endVerse;
+   }
+           public override string ToString()
     {
         if (EndVerse.HasValue)
         {
-            return $"{Book} {Chapter}:{StartVerse}-{EndVerse.Value}";
+            return $"{_book} {_chapter}:{_startVerse}-{_endVerse.Value}";
         }
 
-        return $"{Book} {Chapter}:{StartVerse}";
+        return $"{_book} {_chapter}:{_startVerse}";
     }
 }
