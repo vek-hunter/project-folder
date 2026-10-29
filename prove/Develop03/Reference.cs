@@ -17,28 +17,28 @@ public class Reference
 
     public Reference(string book, int chapter, int startVerse, int endVerse)
     {
-        Book = book;
-        Chapter = chapter;
-        StartVerse = startVerse;
-        EndVerse = endVerse;
+        _book = book;
+        _chapter = chapter;
+        _startVerse = startVerse;
+        _endVerse = endVerse;
     }
    public string GetBook() {
        return _book;
    }
 
-   public string GetChapter() {
+   public int GetChapter() {
        return _chapter;
    }
 
-   public string GetStartVerse () {
+   public int GetStartVerse () {
        return _startVerse;
    }
-   public string GetEndVerse () {
+   public int? GetEndVerse () {
        return _endVerse;
    }
            public override string ToString()
     {
-        if (EndVerse.HasValue)
+        if (_endVerse.HasValue)
         {
             return $"{_book} {_chapter}:{_startVerse}-{_endVerse.Value}";
         }
