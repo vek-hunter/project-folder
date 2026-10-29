@@ -5,7 +5,7 @@ public class Reference
     private string _book; 
     private int _chapter;  
     private int _startVerse; 
-    private int _endVerse; 
+    private int? _endVerse; 
 
     public Reference(string book, int chapter, int startVerse)
     {
@@ -26,14 +26,14 @@ public class Reference
        return _book;
    }
 
-   public string GetBook() {
+   public string GetChapter() {
        return _chapter;
    }
 
-   public string GetBook() {
+   public string GetStartVerse () {
        return _startVerse;
    }
-   public string GetBook() {
+   public string GetEndVerse () {
        return _endVerse;
    }
            public override string ToString()
