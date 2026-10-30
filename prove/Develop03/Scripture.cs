@@ -1,53 +1,100 @@
-namespace Develop03;
 
-public class Scripture
+using System;
+using System.Collections.Generic;
+
+namespace Develop03
 {
-    private readonly Reference _reference;
-    private readonly List<Word> _words;
-    private readonly Random _random;
-
-    public Scripture(Reference reference, string text)
+    public class Scripture
     {
-        _reference = reference;
-        _words = text
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .Select(word => new Word(word))
-            .ToList();
-        _random = new Random();
-    }
+        private readonly Reference _reference;
+        private readonly List<Word> _words;
+        private readonly Random _random;
 
-    public bool IsCompletelyHidden()
-    {
-        return _words.All(word => word.IsHidden);
-    }
-
-    public void HideRandomWords(int count)
-    {
-        var availableWords = _words
-            .Select((word, index) => new { word, index })
-            .Where(item => !item.word.IsHidden)
-            .Select(item => item.index)
-            .ToList();
-
-        if (availableWords.Count == 0)
+        public Scripture(Reference reference, string text)
         {
-            return;
+            _reference = reference;
+            _words = new List<Word>();
+
+            string[] splitWords = text.Split(
+                new char[] { ' ' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+            foreach (string word in splitWords)
+            {
+                _words.Add(new Word(word));
+            }
+
+            _random = new Random();
         }
 
-        var numberToHide = Math.Min(count, availableWords.Count);
-        var hiddenIndexes = availableWords
-            .OrderBy(_ => _random.Next())
-            .Take(numberToHide)
-            .ToList();
-
-        foreach (var index in hiddenIndexes)
+        public bool IsCompletelyHidden()
         {
-            _words[index].Hide();
-        }
-    }
+            foreach (Word word in _words)
+            {
+                if (!word.GetIsHidden())
+                {
+                    return false;
+                }
+            }
 
-    public string GetDisplayText()
-    {
-        return $"{_reference}\n\n{string.Join(" ", _words.Select(word => word.GetDisplayText()))}";
+            return true;
+        }
+
+        public void HideRandomWords(int count)
+        {
+            List<int> availableIndexes = new List<int>();
+
+            for (int i = 0; i < _words.Count; i++)
+            {
+                if (!_words[i].GetIsHidden())
+                {
+                    availableIndexes.Add(i);
+                }
+            }
+
+            if (availableIndexes.Count == 0)
+            {
+                return;
+            }
+
+            int numberToHide = Math.Min(count, availableIndexes.Count);
+
+            List<int> hiddenIndexes = new List<int>();
+
+            while (hiddenIndexes.Count < numberToHide)
+            {
+                int randomPosition = _random.Next(availableIndexes.Count);
+                int selectedIndex = availableIndexes[randomPosition];
+
+                if (!hiddenIndexes.Contains(selectedIndex))
+                {
+                    hiddenIndexes.Add(selectedIndex);
+                }
+            }
+
+            foreach (int index in hiddenIndexes)
+            {
+                _words[index].Hide();
+            }
+        }
+
+        public string GetDisplayText()
+        {
+            string displayText = "";
+
+            foreach (Word word in _words)
+            {
+                if (displayText != "")
+                {
+                    displayText += " ";
+                }
+
+                displayText += word.GetDisplayText();
+            }
+
+            return _reference + "\n\n" + displayText;
+        }
     }
 }
+
