@@ -1,28 +1,35 @@
-namespace Develop03;
 
-public class Word
+namespace Develop03
 {
-    public string Text { get; }
-    public bool IsHidden { get; private set; }
-
-    public Word(string text)
+    public class Word
     {
-        Text = text;
-        IsHidden = false;
-    }
+        private string _text;
+        private bool _isHidden;
 
-    public void Hide()
-    {
-        IsHidden = true;
-    }
-
-    public string GetDisplayText()
-    {
-        if (IsHidden)
+        public Word(string text)
         {
-            return new string('_', Text.Length);
+            _text = text;
+            _isHidden = false;
         }
 
-        return Text;
+        public void Hide()
+        {
+            _isHidden = true;
+        }
+
+        public bool GetIsHidden()
+        {
+            return _isHidden;
+        }
+
+        public string GetDisplayText()
+        {
+            if (_isHidden)
+            {
+                return new string('_', _text.Length);
+            }
+
+            return _text;
+        }
     }
 }
