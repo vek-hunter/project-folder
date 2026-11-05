@@ -31,24 +31,23 @@ public class ReflectionActivity : MindfulnessActivity
 
     protected override void PerformActivity()
     {
-        string prompt = _prompts[random.Next(_prompts.Length)];
-        Console.WriteLine("\nConsider the following prompt:\n");
-        Console.WriteLine($"--- {prompt} ---\n");
-        Console.WriteLine("When you have something in mind, press enter to continue.");
-        Console.ReadLine();
+        string prompt = _prompts[Random.Next(_prompts.Length)];
+        Console.WriteLine();
+        Console.WriteLine("Reflection prompt:");
+        Console.WriteLine(prompt);
+        Console.WriteLine("Take a moment to think deeply about this experience.");
+        ShowSpinner(3, "Reflecting");
 
-        Console.WriteLine("Now ponder on each of the following questions as they relate to this experience.");
-        Console.Write("You may begin in: ");
-        ShowCountdown(5);
-        Console.Clear();
+        int elapsedSeconds = 0;
 
-        DateTime endTime = DateTime.Now.AddSeconds(durationSeconds);
-        while (DateTime.Now < endTime)
+        while (elapsedSeconds < DurationSeconds)
         {
-            string question = _questions[random.Next(_questions.Length)];
+            string question = _questions[Random.Next(_questions.Length)];
             Console.WriteLine();
-            ShowSpinner(8, question);
-            Console.WriteLine();
+            Console.WriteLine(question);
+            int pauseLength = Math.Min(3, DurationSeconds - elapsedSeconds);
+            ShowSpinner(pauseLength, "Thinking");
+            elapsedSeconds += pauseLength;
         }
     }
 }
